@@ -11,12 +11,13 @@ import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+import { InitialConfigType } from '@lexical/react/LexicalComposer'
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { MarkdownShortcutPlugin } from "@lexical/react/LexicalMarkdownShortcutPlugin";
-import { TRANSFORMERS } from "@lexical/markdown";
+import { $convertFromMarkdownString, TRANSFORMERS } from '@lexical/markdown';
 
 import CodeHighlightPlugin from "./plugins/CodeHighlightPlugin";
 import ActionsPlugin from "./plugins/ActionPlugin";
-import prepopulatedText from "./SampleText";
 
 function Placeholder() {
   return (
@@ -26,14 +27,13 @@ function Placeholder() {
   );
 }
 
-const editorConfig = {
-  editorState: prepopulatedText,
+const editorConfig: InitialConfigType = {
+  namespace: 'composer',
+  editorState: () => $convertFromMarkdownString("**hello** \n *world*", TRANSFORMERS),
   theme: ExampleTheme,
-  // Handling of errors during update
-  onError(error) {
+  onError(error: Error) {
     throw error;
   },
-  // Any custom nodes go here
   nodes: [
     HeadingNode,
     ListNode,
@@ -52,12 +52,12 @@ const editorConfig = {
 export default function Editor() {
   return (
     <LexicalComposer initialConfig={editorConfig}>
-      <div className="editor-container">
-        <ToolbarPlugin />
+      <div className="editor-container"> <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
             placeholder={<Placeholder />}
+            ErrorBoundary={LexicalErrorBoundary}
           />
           <AutoFocusPlugin />
           <ListPlugin />

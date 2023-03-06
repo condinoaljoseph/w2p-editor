@@ -5,7 +5,6 @@ import {
 } from "@lexical/markdown";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $createTextNode, $getRoot } from "lexical";
-import * as React from "react";
 import { useCallback } from "react";
 
 import { PLAYGROUND_TRANSFORMERS } from "./MarkdownTransformers";
