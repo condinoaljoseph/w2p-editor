@@ -29,7 +29,7 @@ function Placeholder() {
 
 const editorConfig: InitialConfigType = {
   namespace: 'composer',
-  editorState: () => $convertFromMarkdownString("**hello** \n *world*", TRANSFORMERS),
+  editorState: () => $convertFromMarkdownString("# Hello, I am Dern \nI am the greatest *embalmer* of all time \n```javascript console.log('hello world, i am dern');``` \nMy hobbies: \n- Watching anime \n- Playing guitar", TRANSFORMERS),
   theme: ExampleTheme,
   onError(error: Error) {
     throw error;
